@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using System;
@@ -29,17 +30,17 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public UserLoginModel Login(UserLoginModel userLoginModel)
+        public string Login(UserLoginModel userLoginModel)
         {
             try
             {
                 return iuserRL.Login(userLoginModel);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 throw;
             }
-        }
+        }       
     }
 }
