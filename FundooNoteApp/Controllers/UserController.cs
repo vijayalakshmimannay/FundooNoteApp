@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FundooNoteApp.Controllers
 {
@@ -41,6 +43,7 @@ namespace FundooNoteApp.Controllers
             }
 
         }
+
         [HttpPost]
         [Route("Login")]
 
@@ -56,6 +59,59 @@ namespace FundooNoteApp.Controllers
                 else
                 {
                     return BadRequest(new { success = false, message = "Login Failed" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpPost]
+        [Route("ForgetPassword")]
+
+        public IActionResult ForgetPassword(string Email)
+        {
+            try
+            {
+                var result = iuserBL.ForgetPassword(Email);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Email sent Successful"});
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Reset Email not Sent" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("ResetLink")]
+
+        public IActionResult ResetLink(string password, string confirmPassword)
+        {
+            try
+            {
+                var Email = User.FindFirst(ClaimTypes.Email).Value.ToString();
+
+                var result = iuserBL.ResetLink(Email, password, confirmPassword);
+
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Reset Link Successful" });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Reset Link not Sent" });
                 }
             }
             catch (System.Exception)
