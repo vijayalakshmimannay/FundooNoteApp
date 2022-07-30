@@ -37,13 +37,29 @@ namespace CommonLayer.Model
             string Token = msg.Body.ToString();
             string subject = "Fundoo Notes Reset Link";
             string Body = Token;
+
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("lakshmi.bridgelabz@gmail.com");
+            mail.To.Add("lakshmi.bridgelabz@gmail.com");
+            mail.Subject = "subject";
+
+            mail.IsBodyHtml = true;
+            string htmlBody;
+
+            htmlBody = "Write some HTML code here";
+
+            mail.Body = "<body><p>Dear Lakshmi,<br><br>" +
+                "We have sent you a link for resetting your password.<br>" +
+                "Please copy it and paste in your swagger authorization.</body>" + Token;
+
+
             var SMTP = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
                 Credentials = new NetworkCredential("lakshmi.bridgelabz@gmail.com", "laizuhexngdcbfaj"),
                 EnableSsl = true
             };
-            SMTP.Send("lakshmi.bridgelabz@gmail.com", "lakshmi.bridgelabz@gmail.com", subject, Body);
+            SMTP.Send(mail);
             messageQueue.BeginReceive();
         }
     }

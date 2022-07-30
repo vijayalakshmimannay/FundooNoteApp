@@ -107,11 +107,11 @@ namespace FundooNoteApp.Controllers
 
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Reset Link Successful" });
+                    return Ok(new { success = true, message = "Reset Password Successful" });
                 }
                 else
                 {
-                    return BadRequest(new { success = false, message = "Reset Link not Sent" });
+                    return BadRequest(new { success = false, message = "Reset Password not Sent" });
                 }
             }
             catch (System.Exception)
