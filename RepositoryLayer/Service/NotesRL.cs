@@ -13,11 +13,11 @@ namespace RepositoryLayer.Service
     public class NotesRL : INotesRL
     { 
     private readonly FundooContext fundooContext;
-        private readonly IConfiguration _appSettings;
-        public NotesRL(FundooContext fundooContext, IConfiguration appSettings)
+       
+        public NotesRL(FundooContext fundooContext)
         {
             this.fundooContext = fundooContext;
-            _appSettings = appSettings;
+      
         }
         public NotesEntity AddNotes(NotesModel notesModel, long userId)
         {
@@ -145,6 +145,57 @@ namespace RepositoryLayer.Service
             }
         }
 
+        public bool Archive(long NoteID, long userId)
+        {
+            try
+            {
+                var result = fundooContext.NotesTable.Where(x => x.UserId == userId && x.NoteID == NoteID).FirstOrDefault();
+
+                if (result.Archive == true)
+                {
+                    result.Archive = false;
+                    fundooContext.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    result.Archive = true;
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool Trash(long NoteID, long userId)
+        {
+            try
+            {
+                var result = fundooContext.NotesTable.Where(x => x.UserId == userId && x.NoteID == NoteID).FirstOrDefault();
+
+                if (result.Trash == true)
+                {
+                    result.Trash = false;
+                    fundooContext.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    result.Trash = true;
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
+
+    
 }
 

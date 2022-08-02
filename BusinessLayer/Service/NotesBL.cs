@@ -79,6 +79,29 @@ namespace BusinessLayer.Service
                    }
               }
 
+              public bool Archive(long NoteID, long userId)
+              {
+                 try
+                 {
+                   return iNotesRL.Archive(NoteID, userId);
+                 }
+                    catch (Exception)
+                 {
+                     throw;
+                 }
+              }
+              public bool Trash(long NoteID, long userId)
+              {
+                  try
+                  {
+                    return iNotesRL.Trash(NoteID, userId);
+                  }
+                   catch (Exception)
+                  {
+                    throw;
+                  }
+              }
+
      }
        
 }
