@@ -12,97 +12,109 @@ using System.Text;
 
 namespace BusinessLayer.Service
 {
-     public class NotesBL : INotesBL
+    public class NotesBL : INotesBL
+    {
+        private readonly INotesRL iNotesRL;
+
+        public NotesBL(INotesRL iNotesRL)
         {
-            private readonly INotesRL iNotesRL;
+            this.iNotesRL = iNotesRL;
+        }
 
-            public NotesBL(INotesRL iNotesRL)
+        public NotesEntity AddNotes(NotesModel notesModel, long userId)
+        {
+            try
             {
-                this.iNotesRL = iNotesRL;
+                return iNotesRL.AddNotes(notesModel, userId);
             }
-
-            public NotesEntity AddNotes(NotesModel notesModel, long userId)
+            catch (Exception)
             {
-                try
-                {
-                    return iNotesRL.AddNotes(notesModel, userId);
-                }
-                catch (Exception)
-                {
 
-                    throw;
-                }
+                throw;
             }
-             public IEnumerable<NotesEntity> GetNotes(long userId)
-             {
-                 try
-                 {
-                    return iNotesRL.GetNotes(userId);
-                 }
-                 catch (Exception)
-                 {
-                  throw;
-                 }
-             }
-             public bool DeleteNotes(long userId, long noteId)
-             {
-                 try
-                 {
-                     return iNotesRL.DeleteNotes(userId, noteId);
-                 }
-                  catch (Exception)
-                 {
-                   throw;
-                 }
-             }
+        }
+        public IEnumerable<NotesEntity> GetNotes(long userId)
+        {
+            try
+            {
+                return iNotesRL.GetNotes(userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool DeleteNotes(long userId, long noteId)
+        {
+            try
+            {
+                return iNotesRL.DeleteNotes(userId, noteId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-              public NotesEntity UpdateNote(NotesModel noteModel, long NoteId, long userId)
-              {
-                   try
-                   {
-                      return iNotesRL.UpdateNote(noteModel, NoteId, userId);
-                   }
-                   catch (Exception)
-                   {
-                      throw;
-                   }
-              }
-              public bool PinToDashboard(long NoteID, long userId)
-              {
-                   try
-                   { 
-                       return iNotesRL.PinToDashboard(NoteID, userId);
-                   }
-                   catch (Exception)
-                   {
-                       throw;
-                   }
-              }
+        public NotesEntity UpdateNote(NotesModel noteModel, long NoteId, long userId)
+        {
+            try
+            {
+                return iNotesRL.UpdateNote(noteModel, NoteId, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool PinToDashboard(long NoteID, long userId)
+        {
+            try
+            {
+                return iNotesRL.PinToDashboard(NoteID, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-              public bool Archive(long NoteID, long userId)
-              {
-                 try
-                 {
-                   return iNotesRL.Archive(NoteID, userId);
-                 }
-                    catch (Exception)
-                 {
-                     throw;
-                 }
-              }
-              public bool Trash(long NoteID, long userId)
-              {
-                  try
-                  {
-                    return iNotesRL.Trash(NoteID, userId);
-                  }
-                   catch (Exception)
-                  {
-                    throw;
-                  }
-              }
+        public bool Archive(long NoteID, long userId)
+        {
+            try
+            {
+                return iNotesRL.Archive(NoteID, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool Trash(long NoteID, long userId)
+        {
+            try
+            {
+                return iNotesRL.Trash(NoteID, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-     }
+        public NotesEntity Colour(long NoteID, string colour)
+        {
+            try
+            {
+                return iNotesRL.Colour(NoteID, colour);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+    }
        
 }
 

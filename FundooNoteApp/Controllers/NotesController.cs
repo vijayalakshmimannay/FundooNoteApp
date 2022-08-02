@@ -11,41 +11,41 @@ namespace FundooNoteApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class NotesController : ControllerBase
-    { 
-            private readonly INotesBL iNotesBL;
+    {
+        private readonly INotesBL iNotesBL;
 
-            public NotesController(INotesBL iNotesBL)
+        public NotesController(INotesBL iNotesBL)
+        {
+            this.iNotesBL = iNotesBL;
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("Create")]
+        public IActionResult CreateNote(NotesModel noteData)
+        {
+            try
             {
-                this.iNotesBL = iNotesBL;
-            }
-            [Authorize]
-            [HttpPost]
-            [Route("Create")]
-            public IActionResult CreateNote(NotesModel noteData)
-            {
-                try
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
+                var result = iNotesBL.AddNotes(noteData, userId);
+                if (result != null)
                 {
-                    long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
-                    var result = iNotesBL.AddNotes(noteData, userId);
-                    if (result != null)
-                    {
-                        return Ok(new { success = true, message = "Notes Created Successful", data = result });
-                    }
+                    return Ok(new { success = true, message = "Notes Created Successful", data = result });
+                }
 
-                    return BadRequest(new { success = false, message = "Notes not Created" });
-                }
-                catch (Exception)
-                {
-                    // return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
-                    throw;
-                }
+                return BadRequest(new { success = false, message = "Notes not Created" });
             }
-           [HttpPost]
-           [Route("GetNotes")]
-            public IActionResult GetNotes()
+            catch (Exception)
             {
-                try
-                {
+                // return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
+                throw;
+            }
+        }
+        [HttpPost]
+        [Route("GetNotes")]
+        public IActionResult GetNotes()
+        {
+            try
+            {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
                 var result = iNotesBL.GetNotes(userId);
                 if (result != null)
@@ -53,19 +53,19 @@ namespace FundooNoteApp.Controllers
                     return Ok(new { success = true, message = "Notes Received ", data = result });
                 }
                 return BadRequest(new { success = false, message = "Notes not Received" });
-                }
-                catch (System.Exception)
-                {
+            }
+            catch (System.Exception)
+            {
 
                 throw;
-                }
             }
-            [HttpDelete]
-            [Route("DeleteNote")]
-            public IActionResult DeleteNotes(long NoteID)
-            { 
-                try
-                {
+        }
+        [HttpDelete]
+        [Route("DeleteNote")]
+        public IActionResult DeleteNotes(long NoteID)
+        {
+            try
+            {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
                 var result = iNotesBL.DeleteNotes(userId, NoteID);
                 if (result != false)
@@ -77,41 +77,41 @@ namespace FundooNoteApp.Controllers
                     return BadRequest(new { success = false, message = "Cannot delete nNte." });
                 }
             }
-                catch (System.Exception)
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateNote")]
+        public IActionResult UpdateNote(NotesModel noteModel, long NoteID)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
+                var result = iNotesBL.UpdateNote(noteModel, NoteID, userId);
+                if (result != null)
                 {
-                   throw;
+                    return Ok(new { success = true, message = "Note Updated Successfully.", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Cannot update note." });
                 }
             }
-
-            [HttpPut]
-            [Route("UpdateNote")]
-            public IActionResult UpdateNote(NotesModel noteModel, long NoteID)
+            catch (System.Exception)
             {
-                try
-                {
-                    long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
-                    var result = iNotesBL.UpdateNote(noteModel, NoteID, userId);
-                    if (result != null)
-                    {
-                        return Ok(new { success = true, message = "Note Updated Successfully.", data = result });
-                    }
-                    else
-                    {
-                        return BadRequest(new { success = false, message = "Cannot update note." });
-                     }
-                }
-                catch (System.Exception)
-                {
-                   throw;
-                }
+                throw;
             }
+        }
 
-            [HttpPut]
-            [Route("Pin")]
-            public IActionResult pinToDashboard(long NoteID)
+        [HttpPut]
+        [Route("Pin")]
+        public IActionResult pinToDashboard(long NoteID)
+        {
+            try
             {
-                try
-                {
                 long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
                 var result = iNotesBL.PinToDashboard(NoteID, userID);
                 if (result == true)
@@ -123,41 +123,41 @@ namespace FundooNoteApp.Controllers
                     return Ok(new { success = true, message = "Note Unpinned successfully." });
                 }
                 return BadRequest(new { success = false, message = "Cannot perform operation." });
-                }
-                catch (System.Exception)
-                {
-                    throw;
-                }
             }
-            [HttpPut]
-            [Route("Archive")]
-            public IActionResult Archive(long NoteID)
+            catch (System.Exception)
             {
-                 try
-                 {
-                    long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
-                     var result = iNotesBL.Archive(NoteID, userID);
-                 if (result == true)
-                 {
-                    return Ok(new { success = true, message = "Note Archived successfully" });
-                 }
-                 else if (result == false)
-                 {
-                    return Ok(new { success = true, message = "Note UnArchived successfully." });
-                 }
-                 return BadRequest(new { success = false, message = "Cannot perform operation." });
-                 }
-                 catch (System.Exception)
-                 {
-                    throw;
-                 }
+                throw;
             }
-            [HttpPut]
-            [Route("Trash")]
-             public IActionResult Trash(long NoteID)
-             {
-             try
-             {
+        }
+        [HttpPut]
+        [Route("Archive")]
+        public IActionResult Archive(long NoteID)
+        {
+            try
+            {
+                long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
+                var result = iNotesBL.Archive(NoteID, userID);
+                if (result == true)
+                {
+                    return Ok(new { success = true, message = "Note Archived successfully" });
+                }
+                else if (result == false)
+                {
+                    return Ok(new { success = true, message = "Note UnArchived successfully." });
+                }
+                return BadRequest(new { success = false, message = "Cannot perform operation." });
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        [HttpPut]
+        [Route("Trash")]
+        public IActionResult Trash(long NoteID)
+        {
+            try
+            {
                 long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
                 var result = iNotesBL.Trash(NoteID, userID);
                 if (result == true)
@@ -169,13 +169,35 @@ namespace FundooNoteApp.Controllers
                     return Ok(new { success = true, message = "Notes UnTrashed successfully." });
                 }
                 return BadRequest(new { success = false, message = "Cannot perform operation." });
-                }
-                catch (System.Exception)
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        [HttpPut]
+        [Route("Colour")]
+        public IActionResult Colour(long notesId, string colour)
+        {
+            try
+            {
+                var result = iNotesBL.Colour(notesId, colour);
+                if (result != null)
                 {
-                   throw;
+                    return Ok(new { success = true, message = "Colour Changed", data = result });
                 }
-             }
-
+                else
+                {
+                    return NotFound(new { success = false, message = "Colour change Failed" });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
+            
+
 }
 
