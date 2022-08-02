@@ -33,7 +33,53 @@ namespace BusinessLayer.Service
                     throw;
                 }
             }
-        }
+             public IEnumerable<NotesEntity> GetNotes(long userId)
+             {
+                 try
+                 {
+                    return iNotesRL.GetNotes(userId);
+                 }
+                 catch (Exception)
+                 {
+                  throw;
+                 }
+             }
+             public bool DeleteNotes(long userId, long noteId)
+             {
+                 try
+                 {
+                     return iNotesRL.DeleteNotes(userId, noteId);
+                 }
+                  catch (Exception)
+                 {
+                   throw;
+                 }
+             }
+
+              public NotesEntity UpdateNote(NotesModel noteModel, long NoteId, long userId)
+              {
+                   try
+                   {
+                      return iNotesRL.UpdateNote(noteModel, NoteId, userId);
+                   }
+                   catch (Exception)
+                   {
+                      throw;
+                   }
+              }
+              public bool PinToDashboard(long NoteID, long userId)
+              {
+                   try
+                   { 
+                       return iNotesRL.PinToDashboard(NoteID, userId);
+                   }
+                   catch (Exception)
+                   {
+                       throw;
+                   }
+              }
+
+     }
        
-    }
+}
 

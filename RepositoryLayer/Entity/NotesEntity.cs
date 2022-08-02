@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RepositoryLayer.Entity
 {
@@ -24,10 +25,11 @@ namespace RepositoryLayer.Entity
         public bool Trash { get; set; }
         public DateTime Created { get; set; }
         public DateTime Edited { get; set; }
-
+     
         [ForeignKey("User")]
         public long UserId { get; set; }
 
+        [JsonIgnore]
         public virtual UserEntity User { get; set; }
 
     }
