@@ -2,6 +2,7 @@
 using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
@@ -107,6 +108,17 @@ namespace BusinessLayer.Service
             try
             {
                 return iNotesRL.Colour(NoteID, colour);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public string AddImage(long NoteID, long userId, IFormFile image)
+        {
+            try
+            {
+               return iNotesRL.AddImage(NoteID, userId, image);
             }
             catch (Exception)
             {
