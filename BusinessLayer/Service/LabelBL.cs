@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using CommonLayer.Model;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
 using System;
@@ -38,6 +39,30 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public bool UpdateLabel(string name, long labelID)
+        {
+            try
+            {
+                return iLabelRL.UpdateLabel(name, labelID);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool RemoveLabel(long LabelID)
+        {
+            try
+            {
+                return iLabelRL.RemoveLabel(LabelID);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+       
     }
 }
 

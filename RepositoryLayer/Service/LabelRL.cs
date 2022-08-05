@@ -60,6 +60,48 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool UpdateLabel(string name, long labelID)
+        {
+            try
+            {
+                var result = fundooContext.LabelTable.First(x => x.LabelID == labelID);
+                if (result != null)
+                {
+                    result.LabelName = name;
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool RemoveLabel(long LabelID)
+        {
+            try
+            {
+                var result = fundooContext.LabelTable.Where(x => x.LabelID == LabelID).FirstOrDefault();
+                if (result != null)
+                {
+                    fundooContext.LabelTable.Remove(result);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
 

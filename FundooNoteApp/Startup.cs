@@ -35,6 +35,7 @@ namespace FundooNoteApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<FundooContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FundooDB"]));
             services.AddControllers();
             services.AddTransient<IUserBL, UserBL>();
@@ -45,6 +46,7 @@ namespace FundooNoteApp
             services.AddTransient<ICollabRL, CollabRL>();
             services.AddTransient<ILabelBL, LabelBL>();
             services.AddTransient<ILabelRL, LabelRL>();
+
 
             services.AddSwaggerGen();
             services.AddSwaggerGen(opt =>
@@ -91,6 +93,13 @@ namespace FundooNoteApp
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"])) //Configuration["JwtToken:SecretKey"]
                 };
             });
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379";
+            });
+
+            services.AddMemoryCache();
         }
     
 
