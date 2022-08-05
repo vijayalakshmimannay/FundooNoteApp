@@ -59,6 +59,28 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
+        [HttpDelete]
+        [Route("Delete")]
+        public IActionResult RemoveCollab(long CollabID)
+        {
+            try
+            {
+                long userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
+                var result = icollabBL.RemoveCollab(CollabID, userID);
+                if (result)
+                {
+                    return Ok(new { success = true, message = "Removed Collaborator.", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Cannot remove collaborator." });
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
 
     }
 }

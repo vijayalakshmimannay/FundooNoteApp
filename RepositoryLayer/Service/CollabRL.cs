@@ -43,11 +43,11 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public IEnumerable<CollabEntity> GetCollab(long userID)
+        public CollabEntity GetCollab(long userID)
         {
             try
             {
-                var result = fundooContext.CollabTable.Where(x => x.UserId == userID);
+                var result = fundooContext.CollabTable.Where(x => x.UserId == userID).FirstOrDefault();
                 if (result != null)
                 {
                     return result;
@@ -62,5 +62,27 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        public bool RemoveCollab(long CollabID, long userID)
+        {
+            try
+            {
+                var result = fundooContext.CollabTable.Where(x => x.CollabID == CollabID && x.UserId == userID).FirstOrDefault();
+                if (result != null)
+                {
+                    fundooContext.CollabTable.Remove(result);
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
-    }
+}

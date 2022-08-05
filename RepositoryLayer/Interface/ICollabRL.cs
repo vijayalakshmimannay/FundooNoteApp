@@ -8,6 +8,7 @@ namespace RepositoryLayer.Interface
     public interface ICollabRL
     {
         public CollabEntity CreateCollab(long NoteID, string CollabEMail);
-        public IEnumerable<CollabEntity> GetCollab(long userID);
+        public CollabEntity GetCollab(long userID);
+        public bool RemoveCollab(long CollabID, long userID);
     }
 }
