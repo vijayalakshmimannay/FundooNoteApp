@@ -22,6 +22,13 @@ namespace BusinessLayer.Service
             this.iNotesRL = iNotesRL;
         }
 
+        /// <summary>
+        /// Adds the notes.
+        /// </summary>
+        /// <param name="notesModel">The notes model.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        
         public NotesEntity AddNotes(NotesModel notesModel, long userId)
         {
             try
@@ -34,6 +41,12 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+
+        /// <summary>
+        /// Gets the notes.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public IEnumerable<NotesEntity> GetNotes(long userId)
         {
             try
@@ -45,6 +58,14 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+
+        /// <summary>
+        /// Deletes the notes.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns></returns>
+        
         public bool DeleteNotes(long userId, long noteId)
         {
             try
@@ -57,6 +78,14 @@ namespace BusinessLayer.Service
             }
         }
 
+        /// <summary>
+        /// Updates the note.
+        /// </summary>
+        /// <param name="noteModel">The note model.</param>
+        /// <param name="NoteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        
         public NotesEntity UpdateNote(NotesModel noteModel, long NoteId, long userId)
         {
             try
@@ -68,6 +97,14 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+
+        /// <summary>
+        /// Pins to dashboard.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        
         public bool PinToDashboard(long NoteID, long userId)
         {
             try
@@ -80,6 +117,13 @@ namespace BusinessLayer.Service
             }
         }
 
+        /// <summary>
+        /// Archives the specified note identifier.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        
         public bool Archive(long NoteID, long userId)
         {
             try
@@ -91,6 +135,14 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+
+        /// <summary>
+        /// Trashes the specified note identifier.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        
         public bool Trash(long NoteID, long userId)
         {
             try
@@ -103,6 +155,12 @@ namespace BusinessLayer.Service
             }
         }
 
+        /// <summary>
+        /// Colours the specified note identifier.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="colour">The colour.</param>
+        /// <returns></returns>
         public NotesEntity Colour(long NoteID, string colour)
         {
             try
@@ -114,6 +172,13 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        /// <summary>
+        /// Adds the image.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="image">The image.</param>
+        /// <returns></returns>
         public string AddImage(long NoteID, long userId, IFormFile image)
         {
             try

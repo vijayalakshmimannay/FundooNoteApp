@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
@@ -22,13 +23,22 @@ namespace FundooNoteApp.Controllers
         private readonly IMemoryCache memoryCache;
         private readonly IDistributedCache distributedCache;
         private readonly FundooContext fundooContext;
-        public CollabController(ICollabBL icollabBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext)
+        private readonly ILogger<CollabController> _logger;
+        public CollabController(ICollabBL icollabBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext, ILogger<CollabController> logger)
         {
             this.icollabBL = icollabBL;
             this.memoryCache = memoryCache;
             this.distributedCache = distributedCache;
             this.fundooContext = fundooContext;
+            _logger = logger;
         }
+        /// <summary>
+        /// Creates the collab.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="CollabEMail">The collab e mail.</param>
+        /// <returns></returns>
+        
         [HttpPost]
         [Route("Create")]
         public IActionResult CreateCollab(long NoteID, string CollabEMail)
@@ -50,7 +60,11 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
-
+        /// <summary>
+        /// Gets the collab.
+        /// </summary>
+        /// <returns></returns>
+        
         [HttpGet]
         [Route("Get")]
         public IActionResult GetCollab()
@@ -73,6 +87,12 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// Removes the collab.
+        /// </summary>
+        /// <param name="CollabID">The collab identifier.</param>
+        /// <returns></returns>
+        
         [HttpDelete]
         [Route("Delete")]
         public IActionResult RemoveCollab(long CollabID)
@@ -95,6 +115,11 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// Gets all customers using redis cache.
+        /// </summary>
+        /// <returns></returns>
+        
         [HttpGet("redis")]
         public async Task<IActionResult> GetAllCustomersUsingRedisCache()
         {

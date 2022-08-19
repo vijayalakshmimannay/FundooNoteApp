@@ -19,12 +19,23 @@ namespace RepositoryLayer.Service
     private readonly FundooContext fundooContext;
     private readonly IConfiguration configuration;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotesRL"/> class.
+        /// </summary>
+        /// <param name="fundooContext">The fundoo context.</param>
+        /// <param name="configuration">The configuration.</param>
         public NotesRL(FundooContext fundooContext, IConfiguration configuration)
         {
             this.fundooContext = fundooContext;
             this.configuration = configuration;
       
         }
+        /// <summary>
+        /// Adds the notes.
+        /// </summary>
+        /// <param name="notesModel">The notes model.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public NotesEntity AddNotes(NotesModel notesModel, long userId)
         {
             try
@@ -61,6 +72,11 @@ namespace RepositoryLayer.Service
             }
 
         }
+        /// <summary>
+        /// Gets the notes.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public IEnumerable<NotesEntity> GetNotes(long userId)
         {
             try
@@ -76,7 +92,12 @@ namespace RepositoryLayer.Service
             }
 
         }
-
+        /// <summary>
+        /// Deletes the notes.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns></returns>
         public bool DeleteNotes(long userId, long noteId)
         {
             try
@@ -99,6 +120,13 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        /// <summary>
+        /// Updates the note.
+        /// </summary>
+        /// <param name="noteModel">The note model.</param>
+        /// <param name="NoteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public NotesEntity UpdateNote(NotesModel noteModel, long NoteId, long userId)
         {
             try
@@ -126,6 +154,12 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        /// <summary>
+        /// Pins to dashboard.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public bool PinToDashboard(long NoteID, long userId)
         {
             try
@@ -151,6 +185,12 @@ namespace RepositoryLayer.Service
             }
         }
 
+        /// <summary>
+        /// Archives the specified note identifier.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public bool Archive(long NoteID, long userId)
         {
             try
@@ -175,6 +215,12 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        /// <summary>
+        /// Trashes the specified note identifier.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public bool Trash(long NoteID, long userId)
         {
             try
@@ -200,6 +246,12 @@ namespace RepositoryLayer.Service
             }
         }
 
+        /// <summary>
+        /// Colours the specified note identifier.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="colour">The colour.</param>
+        /// <returns></returns>
         public NotesEntity Colour(long NoteID, string colour)
         {
             try
@@ -222,7 +274,15 @@ namespace RepositoryLayer.Service
             }
 
         }
-           
+
+        /// <summary>
+        /// Adds the image.
+        /// </summary>
+        /// <param name="NoteID">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="image">The image.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public string AddImage(long NoteID, long userId, IFormFile image)
         {
             try

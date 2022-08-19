@@ -11,6 +11,10 @@ namespace CommonLayer.Model
     {
         MessageQueue messageQueue = new MessageQueue();
 
+        /// <summary>
+        /// Sends the data2 queue.
+        /// </summary>
+        /// <param name="Token">The token.</param>
         public void sendData2Queue(string Token)
         {
 
@@ -31,6 +35,13 @@ namespace CommonLayer.Model
             messageQueue.Close();
         }
 
+
+        /// <summary>
+        /// Handles the ReceiveCompleted event of the MessageQueue control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ReceiveCompletedEventArgs"/> instance containing the event data.</param>
+        
         private void MessageQueue_ReceiveCompleted(object sender, ReceiveCompletedEventArgs e)
         {
             var msg = messageQueue.EndReceive(e.AsyncResult);

@@ -15,6 +15,13 @@ namespace RepositoryLayer.Service
         {
             this.fundooContext = fundooContext;
         }
+        /// <summary>
+        /// Creates the label.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="noteID">The note identifier.</param>
+        /// <param name="userID">The user identifier.</param>
+        /// <returns></returns>
         public bool CreateLabel(string name, long noteID, long userID)
         {
             try
@@ -41,6 +48,11 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        /// <summary>
+        /// Gets the label.
+        /// </summary>
+        /// <param name="labelID">The label identifier.</param>
+        /// <returns></returns>
         public IEnumerable<LabelEntity> GetLabel(long labelID)
         {
             try
@@ -60,6 +72,12 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        /// <summary>
+        /// Updates the label.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="labelID">The label identifier.</param>
+        /// <returns></returns>
         public bool UpdateLabel(string name, long labelID)
         {
             try
@@ -82,6 +100,11 @@ namespace RepositoryLayer.Service
                 throw;
             }
         }
+        /// <summary>
+        /// Removes the label.
+        /// </summary>
+        /// <param name="LabelID">The label identifier.</param>
+        /// <returns></returns>
         public bool RemoveLabel(long LabelID)
         {
             try

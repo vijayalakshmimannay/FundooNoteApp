@@ -3,22 +3,34 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Security.Claims;
 
 namespace FundooNoteApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class UserController : ControllerBase
     {
 
         private readonly IUserBL iuserBL;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserBL iuserBL)
+        public UserController(IUserBL iuserBL,
+            ILogger<UserController> logger)
         {
             this.iuserBL = iuserBL;
+            _logger = logger;
         }
 
+        /// <summary>
+        /// Registers the user.
+        /// </summary>
+        /// <param name="userRegistration">The user registration.</param>
+        /// <returns></returns>
+        
         [HttpPost]
         [Route("Register")]
 
@@ -36,14 +48,20 @@ namespace FundooNoteApp.Controllers
                     return BadRequest(new { success = false, message = "Registration UnSuccessful"});
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                _logger.LogError(ex.ToString());
+                return BadRequest(ex.ToString());
             }
 
         }
-
+        /// <summary>
+        /// Users the login.
+        /// </summary>
+        /// <param name="userLoginModel">The user login model.</param>
+        /// <returns></returns
+        
         [HttpPost]
         [Route("Login")]
 
@@ -68,7 +86,12 @@ namespace FundooNoteApp.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Forgets the password.
+        /// </summary>
+        /// <param name="Email">The email.</param>
+        /// <returns></returns>
+        
         [HttpPost]
         [Route("ForgetPassword")]
 
@@ -93,6 +116,14 @@ namespace FundooNoteApp.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Resets the link.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="confirmPassword">The confirm password.</param>
+        /// <returns></returns> 
+        
         [Authorize]
         [HttpPost]
         [Route("ResetLink")]

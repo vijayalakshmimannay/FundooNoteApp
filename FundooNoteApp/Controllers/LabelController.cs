@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
@@ -25,14 +26,23 @@ namespace FundooNoteApp.Controllers
         private readonly IMemoryCache memoryCache;
         private readonly IDistributedCache distributedCache;
         private readonly FundooContext fundooContext;
-        public LabelController(ILabelBL iLabelBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext)
+        private readonly ILogger<LabelController> _logger;
+        public LabelController(ILabelBL iLabelBL, IMemoryCache memoryCache, IDistributedCache distributedCache, FundooContext fundooContext, ILogger<LabelController> logger)
         {
             this.iLabelBL = iLabelBL;
             this.memoryCache = memoryCache;
             this.distributedCache = distributedCache;
             this.fundooContext = fundooContext;
-
+            _logger = logger;
         }
+
+        /// <summary>
+        /// Creates the label.
+        /// </summary>
+        /// <param name="Name">The name.</param>
+        /// <param name="noteID">The note identifier.</param>
+        /// <returns></returns>
+        
         [HttpPost]
         [Route("Create")]
         public IActionResult CreateLabel(string Name, long noteID)
@@ -55,6 +65,13 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Gets the label.
+        /// </summary>
+        /// <param name="LabelID">The label identifier.</param>
+        /// <returns></returns>
+        
         [HttpGet]
         [Route("Get")]
         public IActionResult GetLabel(long LabelID)
@@ -77,6 +94,13 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// Updates the label.
+        /// </summary>
+        /// <param name="LabelName">Name of the label.</param>
+        /// <param name="labelId">The label identifier.</param>
+        /// <returns></returns>
+
         [HttpPut]
         [Route("Update")]
         public IActionResult UpdateLabel(string LabelName, long labelId)
@@ -99,7 +123,12 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
-
+        /// <summary>
+        /// Removes the label.
+        /// </summary>
+        /// <param name="LabelID">The label identifier.</param>
+        /// <returns></returns>
+        
         [HttpDelete]
         [Route("Delete")]
         public IActionResult RemoveLabel(long LabelID)
@@ -122,6 +151,12 @@ namespace FundooNoteApp.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Gets all customers using redis cache.
+        /// </summary>
+        /// <returns></returns>
+        
         [HttpGet("redis")]
         public async Task<IActionResult> GetAllCustomersUsingRedisCache()
         {
