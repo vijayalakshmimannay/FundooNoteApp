@@ -40,7 +40,7 @@ namespace BusinessLayer.Service
         /// <param name="userID">The user identifier.</param>
         /// <returns></returns>
         
-/        public CollabEntity GetCollab(long userID)
+        public CollabEntity GetCollab(long userID)
         {
             try
             {

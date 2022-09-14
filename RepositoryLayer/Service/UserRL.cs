@@ -38,8 +38,8 @@ namespace RepositoryLayer.Service
                 userEntity.FirstName = userRegistrationModel.FirstName;
                 userEntity.LastName = userRegistrationModel.LastName;
                 userEntity.Email = userRegistrationModel.Email;
-                //userEntity.Password = userRegistrationModel.Password;
-                userEntity.Password = EncryptPassword(userRegistrationModel.Password);
+                userEntity.Password = userRegistrationModel.Password;
+               // userEntity.Password = EncryptPassword(userRegistrationModel.Password);
 
                 fundooContext.UserEntities.Add(userEntity);
                 int result = fundooContext.SaveChanges();
@@ -71,8 +71,9 @@ namespace RepositoryLayer.Service
             try
             {  
                 var LoginResult = this.fundooContext.UserEntities.Where(user => user.Email == userLoginModel.Email).FirstOrDefault();
-                if(LoginResult != null && Decryption(LoginResult.Password) == userLoginModel.Password)
-                {
+                //if(LoginResult != null && Decryption(LoginResult.Password) == userLoginModel.Password)
+                  if (LoginResult != null && LoginResult.Password == userLoginModel.Password)
+                    {
                     var token = GenerateSecurityToken(LoginResult.Email, LoginResult.UserId);
                    // userLoginModel.UserName = LoginResult.FirstName;
                    // userLoginModel.Email = LoginResult.Email;

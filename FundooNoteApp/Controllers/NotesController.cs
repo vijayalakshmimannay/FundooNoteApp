@@ -70,13 +70,14 @@ namespace FundooNoteApp.Controllers
         /// </summary>
         /// <returns></returns>
         
-        [HttpPost]
+        [HttpGet]
         [Route("GetNotes")]
         public IActionResult GetNotes()
         {
             try
             {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userID").Value);
+              
                 var result = iNotesBL.GetNotes(userId);
                 if (result != null)
                 {
